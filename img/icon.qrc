@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/icon"/>
+    <qresource prefix="/">
+        <file>clear.jpg</file>
+        <file>new.jpg</file>
+        <file>open.jpg</file>
+        <file>replace.jpg</file>
+        <file>run.jpg</file>
+        <file>step.jpg</file>
+        <file>xor.jpg</file>
+        <file>me.jpg</file>
+        <file>options.jpg</file>
+        <file>me2.jpg</file>
+    </qresource>
+    <qresource prefix="/photo"/>
+</RCC>

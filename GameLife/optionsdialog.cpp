@@ -29,7 +29,6 @@ void OptionsDialog::connectCellSize(int size){
     ui->cellSize->setText(QString::number(size));
 }
 
-
 //отправляем данные при нажатии кнопки Create
 void OptionsDialog::on_pushButton_clicked()
 {

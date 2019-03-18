@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     optionsdialog.cpp \
     painter.cpp \
-    controller.cpp
+    hexagon.cpp \
+    span.cpp
 
 HEADERS += \
         mainwindow.h \
     optionsdialog.h \
     painter.h \
-    controller.h
+    hexagon.h \
+    span.h
 
 FORMS += \
         mainwindow.ui \

@@ -19,6 +19,8 @@ public:
     //void resizeEvent(QResizeEvent *);
     ~MainWindow();
 
+public slots:
+    void on_actionClear_triggered();
 signals:
     void MChanged(int M);
     void NChanged(int N);

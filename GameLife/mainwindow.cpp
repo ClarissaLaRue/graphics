@@ -68,3 +68,9 @@ void MainWindow::on_actionXOR_triggered()
 {
 
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+    painter->Clear();
+}
+

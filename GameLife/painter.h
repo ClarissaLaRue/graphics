@@ -31,6 +31,8 @@ public:
     Span getSpan(int x, int y, unsigned char *bits, qint32 len);
     int getColor(unsigned char *bits);
     int getColor(Span span);
+    void fillHexagon(int x, int y);
+    void Clear();
     ~Painter();
 
 protected:
@@ -49,12 +51,12 @@ private:
     QImage image;
     unsigned char *bits;
     qint32 len;
-    int cellSize = 90;
+    int cellSize = 40;
     int halfSize;
     int halfSizeSqrt3;
-    int M = 3;
-    int N = 3;
-    list<Hexagon> field;
+    int M = 7;
+    int N = 5;
+    vector<Hexagon> field;
     const int BLACK = 0;
     const int BLUE = 1;
     const int WHITE = 2;

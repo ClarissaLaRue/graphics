@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/files">
+        <file>Line/grid.jpg</file>
+        <file>Line/lines.jpg</file>
+        <file>Line/map.jpg</file>
+        <file>Line/new.jpg</file>
+        <file>Line/open.jpg</file>
+        <file>Line/options.jpg</file>
+        <file>Line/point.jpg</file>
+        <file>Line/штеук.jpg</file>
+    </qresource>
+</RCC>

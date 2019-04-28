@@ -98,7 +98,7 @@ QColor Map::chooseColor(float f){
 
 void Map::drawIsolines(QPainter &p){
     int stepX = abs(config.getB() - config.getA()) / config.getK();
-    int stepY = abs(config.getD() - config.getC()) / config.getK();
+    int stepY = abs(config.getD() - config.getC()) / config.getM();
     int x = 0;
     int y = 0;
     int pointCount = 0;
@@ -109,54 +109,70 @@ void Map::drawIsolines(QPainter &p){
     float f3;
     float f4;
     for (int i = 0; i < config.getK(); i++){
-        for(int m = 0; m < config.getM(); m++){
-            f1 = config.calculate(x, y);
-            f2 = config.calculate(x+stepX, y);
-            f3 = config.calculate(x, y+stepY);
-            f4 = config.calculate(x+stepX, y+stepY);
-            for (int j = 0; j < config.getN(); j++){
+        for(int m = 0; m < config.getM(); m++){       
+            for (int j = 0; j < config.getN() - 1; j++){
                 z = colors[j].to;
-                //точки входа для верхних граней
-                if (!(f1 < z && f2 < z) && !(f1 > z && f2 > z)){
-                    inPoint.push_back(std::make_pair(x + stepX * ( z - f1)/(f2 - f1), y));
-                    pointCount++;
-                    pointsInCell++;
+                findingPoints(x, y, stepX, stepY, z);
+
+                if (inPoint.size() - pointCount == 2){
+                    pointCount = inPoint.size();
+                    p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-2].first, inPoint[pointCount-2].second);
                 }
 
-                //точки входа для нижних граней
-                if (!(f3 < z && f4 < z) && !(f3 > z && f4 > z)){
-                    inPoint.push_back(std::make_pair(x + stepX * ( z - f3)/(f4 - f3), y + stepY));
-                    pointCount++;
-                    pointsInCell++;
+                if (inPoint.size() - pointCount == 3){
+                    //pointCount = inPoint.size();
+                    inPoint.pop_back();
+                    inPoint.pop_back();
+                    for(int t= 0; t < 5; t++){
+                        z-=0.01;
+                        findingPoints(x, y, stepX, stepY, z);
+                        if (inPoint.size() - pointCount == 2){
+                            p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-2].first, inPoint[pointCount-2].second);
+                            pointCount = inPoint.size();
+                        }
+                        pointCount = inPoint.size();
+
+                    }
+
+//                    findingPoints(x, y, stepX, stepY, z-0.01);
+//                    if (inPoint.size() - pointCount == 2){
+//                        p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-2].first, inPoint[pointCount-2].second);
+//                    }
+//                    pointCount = inPoint.size();
                 }
 
-                //точки входа для правых граней
-                if (!(f2 < z && f4 < z) && !(f2 > z && f4 > z)){
-                    inPoint.push_back(std::make_pair(x + stepX ,y + stepY * (z - f2)/(f4 - f2)));
-                    pointCount++;
-                    pointsInCell++;
-                }
-
-                //точки входа для левых граней
-                if (!(f3 < z && f1 < z) && !(f3 > z && f1 > z)){
-                    inPoint.push_back(std::make_pair(x , y + stepY  * (z - f1)/(f3 - f1)));
-                    pointCount++;
-                    pointsInCell++;
-                }
-
-                //в клетке больше точек, чем две, даже если по одной линии
-//                if (pointsInCell == 2){
-//                    p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-2].first, inPoint[pointCount-2].second);
-//                }
-
-                std::cout<<i<<" "<< m<< " " <<pointsInCell<<std::endl;
-
-                pointsInCell = 0;
+                pointCount = inPoint.size();
             }
             y += stepY;
         }
         x += stepX;
         y=0;
+    }
+}
+
+void Map::findingPoints(int x, int y, int stepX, int stepY, float z){
+    float f1 = config.calculate(x, y);
+    float f2 = config.calculate(x+stepX, y);
+    float f3 = config.calculate(x, y+stepY);
+    float f4 = config.calculate(x+stepX, y+stepY);
+    //точки входа для верхних граней
+    if (!(f1 < z && f2 < z) && !(f1 > z && f2 > z)){
+        inPoint.push_back(std::make_pair(x + stepX * ( z - f1)/(f2 - f1), y));
+    }
+
+    //точки входа для нижних граней
+    if (!(f3 < z && f4 < z) && !(f3 > z && f4 > z)){
+        inPoint.push_back(std::make_pair(x + stepX * ( z - f3)/(f4 - f3), y + stepY));
+    }
+
+    //точки входа для правых граней
+    if (!(f2 < z && f4 < z) && !(f2 > z && f4 > z)){
+        inPoint.push_back(std::make_pair(x + stepX ,y + stepY * (z - f2)/(f4 - f2)));
+    }
+
+    //точки входа для левых граней
+    if (!(f3 < z && f1 < z) && !(f3 > z && f1 > z)){
+        inPoint.push_back(std::make_pair(x , y + stepY  * (z - f1)/(f3 - f1)));
     }
 }
 

@@ -36,6 +36,7 @@ private:
     void drawGrid(unsigned char *bits, qint32 len);
     void drawVerticalLine(int x0, int y0, int x1, int y1, unsigned char *bits, qint32 len);
     void drawHorizontalLine(int x0, int y0, int x1, int y1, unsigned char *bits, qint32 len);
+    void findingPoints(int x, int y, int stepX, int stepY, float z);
 
 protected:
     void paintEvent(QPaintEvent *);

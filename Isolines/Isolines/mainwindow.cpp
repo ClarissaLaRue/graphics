@@ -40,7 +40,7 @@ configuration MainWindow::makeConfig(){
     colors.push_back(QColor(200, 0 , 255));
     colors.push_back(QColor(40, 0 , 255));
     colors.push_back(QColor(0, 200 , 255));
-    configuration config(5, 5, 5, colors, QColor(0, 0, 0));
+    configuration config(10, 10, 5, colors, QColor(0, 0, 0));
     config.findMaxMin(config.getA(),config.getB(), config.getC(), config.getD());
     return config;
 }

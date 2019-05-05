@@ -6,10 +6,10 @@ Function::Function()
 
 }
 
-float Function::calculate(int x, int y){
+float Function::calculate(float x, float y){
     //return x + y;
-    return (x * x) - (y * y);
-    //return sin(x) + sin(y);
+    //return (x * x) - (y * y);
+    return sin((float)x/100) * sin((float)y/100);
     //return x*x*x + y*y;
 }
 

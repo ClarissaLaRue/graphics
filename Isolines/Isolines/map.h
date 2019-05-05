@@ -47,9 +47,9 @@ private:
     vector<pair<int, int>> inPoint;
     float min;
     float max;
-    bool needLsolines = true;
+    bool needLsolines = false;
     bool needGrid = false;
-    bool needPoint = true;
+    bool needPoint = false;
 };
 
 #endif // MAP_H

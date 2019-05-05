@@ -6,7 +6,7 @@ class Function
 {
 public:
     Function();
-    float calculate(int x, int y);
+    float calculate(float x, float y);
     void findMaxMin(int a, int b, int c, int d);
     float getMax();
     float getMin();

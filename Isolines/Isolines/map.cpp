@@ -134,6 +134,21 @@ void Map::drawIsolines(QPainter &p){
 
                     }
 
+                    if (inPoint.size() - pointCount == 4){
+                        float f1 = config.calculate(x, y);
+                        float f2 = config.calculate(x+stepX, y);
+                        float f3 = config.calculate(x, y+stepY);
+                        float f4 = config.calculate(x+stepX, y+stepY);
+                        float center = (f1 + f2 + f3 + f4)/4;
+                        if (!(f1 < z && center < z) && !(f1 > z && center > z)){
+                            p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-4].first, inPoint[pointCount-4].second);
+                            p.drawLine(inPoint[pointCount-2].first, inPoint[pointCount-2].second, inPoint[pointCount-3].first, inPoint[pointCount-3].second);
+                        }else{
+                            p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-3].first, inPoint[pointCount-3].second);
+                            p.drawLine(inPoint[pointCount-2].first, inPoint[pointCount-2].second, inPoint[pointCount-4].first, inPoint[pointCount-4].second);
+                        }
+                    }
+
 //                    findingPoints(x, y, stepX, stepY, z-0.01);
 //                    if (inPoint.size() - pointCount == 2){
 //                        p.drawLine(inPoint[pointCount-1].first, inPoint[pointCount-1].second, inPoint[pointCount-2].first, inPoint[pointCount-2].second);
@@ -155,6 +170,22 @@ void Map::findingPoints(int x, int y, int stepX, int stepY, float z){
     float f2 = config.calculate(x+stepX, y);
     float f3 = config.calculate(x, y+stepY);
     float f4 = config.calculate(x+stepX, y+stepY);
+
+    if ((z < f1) && (z + 0.001 > f1)){
+        f1 += 0.01;
+    }
+    if ((z < f2) && (z + 0.001 > f2)){
+        f1 += 0.01;
+    }
+    if ((z < f3) && (z + 0.001 > f3)){
+        f3 += 0.01;
+    }
+    if ((z < f4) && (z + 0.001 > f4)){
+        f4 += 0.01;
+    }
+    //добавить сравнение z с каждым f
+    //сделать массив со значениями в узлах сетки + сравнить с значением всехи изолиний
+
     //точки входа для верхних граней
     if (!(f1 < z && f2 < z) && !(f1 > z && f2 > z)){
         inPoint.push_back(std::make_pair(x + stepX * ( z - f1)/(f2 - f1), y));
@@ -198,7 +229,7 @@ void Map::drawGrid(unsigned char *bits, qint32 len){
         x += step;
         drawVerticalLine(x, 0, x, abs(config.getD() - config.getC()), bits, len);
     }
-    step = abs(config.getD() - config.getC()) / config.getK();
+    step = abs(config.getD() - config.getC()) / config.getM();
     int y = 0;
     for (int i = 0; i < config.getM() - 1; i++){
         y += step;

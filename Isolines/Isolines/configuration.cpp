@@ -93,7 +93,7 @@ float configuration::getMax(){
 }
 
 float configuration::calculate(int x, int y){
-    return function.calculate(x, y);
+    return function.calculate((float)x, (float)y);
 }
 
 QColor configuration::getLineColor(){
